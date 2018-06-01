@@ -43,7 +43,7 @@ declare var $: any;
 })
 @Injectable()
 export class TestdashComponent implements OnChanges, OnInit {
-  Sharing: boolean=false;
+  Sharing: boolean = false;
   Listwidgets: widget[] = [];
   listitemindex: GridsterItemIndex;
   CurrentPageID: number;
@@ -57,7 +57,7 @@ export class TestdashComponent implements OnChanges, OnInit {
   errorMsg: string;
   config: GridsterConfig;
   currentID: number;
-  isButtonVisible:boolean=true
+  isButtonVisible: boolean = true
   sub: Subscription;
   @Input() ActiveUserID: number = 4;
   Allpages: AllDashboards.Dashboard[] = AllDashboards.ListAll;
@@ -80,7 +80,7 @@ export class TestdashComponent implements OnChanges, OnInit {
   }
 
   public hideChildModal(): void {
-    
+
     this.lgModal.hide();
   }
 
@@ -123,8 +123,6 @@ export class TestdashComponent implements OnChanges, OnInit {
   clear() {
     this.alertService.clear();
   }
-
-
 
   showDeletePagePopup() {
     this.notificationService.smartMessageBox({
@@ -188,48 +186,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     this.items[i].OldData = data;
 
   }
-
-  // SaveWidget(item, DataForSave) {
-  //   var currentParam: number;
-  //   var Sub: Subscription = this.route.params.subscribe(param => {
-  //     currentParam = +this.route.snapshot.paramMap.get('id');
-  //     this.SaveState(this.ActiveUserID, currentParam, DataForSave, item);
-  //   });
-
-  //   Sub.unsubscribe();
-
-
-  // }
-
-
-  //  SaveState(UserID, PageID, Data, item) {
-  //     var data0;
-  //     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
-  //         data0 = data;
-  //         var find: boolean = false;
-  //         var i: number = 0;
-  //         for (let index = 0; index < data.length && find == false; index++) {
-  //             if (data[index].id == PageID) { find = true; i = index; }
-  //         }
-  //         var findwidget: boolean = false;
-  //         var iWidget: number = 0;
-  //         for (let index1 = 0; index1 < data[i].items.length && findwidget == false; index1++) {
-  //             if (
-  //                 (data[i].items[index1].name == item.name) &&
-  //                 (data[i].items[index1].x == item.x) &&
-  //                 (data[i].items[index1].y == item.y) &&
-  //                 (data[i].items[index1].cols == item.cols) &&
-  //                 (data[i].items[index1].rows == item.rows)
-  //             ) { findwidget = true; iWidget = index1; }
-  //         }
-  //         data[i].items[iWidget].OldData =Data;
-  //         var x = data[i].items[iWidget];
-  //         var DataString: string = JSON.stringify(data);
-  //         this._dataService.ChangeOldUser(UserID, DataString);
-  //     });
-
-  // }
-
+ 
   addwidget(component, name, id) {
     var itemToPush: GridsterItem;
     this.items.push({ cols: 3, rows: 4, widget: component, name: name, pageID: id });
@@ -251,7 +208,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     Sub.unsubscribe();
 
   }
-
+  
   GetWidgetID(widget) {
     var find: boolean = false;
     var i: number = 0;
@@ -260,7 +217,7 @@ export class TestdashComponent implements OnChanges, OnInit {
 
     } return i + 1;
   }
-
+ 
   LoadItems(listloaded) {
     for (let i = 0; i < listloaded.length; i++) {
       var x = this.find_widget_by_index(listloaded[i].name, this.Listwidgets);
@@ -269,7 +226,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     this.ListAfterEdit = listloaded;
     return listloaded;
   }
-
+  
   find_widget_by_index(index, list) {
     var found: boolean;
     found = false;
@@ -280,7 +237,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       }
     }
   }
-
+  
   GetItemsByPage(id, pages) {
     var find: boolean = false;
     var i: number = 0;
@@ -294,7 +251,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     }
     else return this.DefaultItems;
   }
-
+  
   onStart(UserId, PageID) {
     this._dataService.GetPagesByUserID(UserId)
       .subscribe((data: data) => {
@@ -313,7 +270,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       return data.snapshot.paramMap.get('id') - 1;
     });
   }
-
+ 
   DeletePageFromData(PageId, UserID) {
     var pages: string
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
@@ -337,7 +294,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       this._dataService.ChangeOldUser(UserID, this.pagesAfterDelete);
     });
   }
-
+ 
   DeletePage() {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
@@ -350,12 +307,7 @@ export class TestdashComponent implements OnChanges, OnInit {
 
 
   }
-
-  Show(note: string) {
-    console.log(note);
-
-  }
-
+ 
   Save() {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
@@ -364,7 +316,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     });
     Sub.unsubscribe();
   }
-
+ 
   SaveDashboardState(UserID, pageId, UpdatedItems) {
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
       this.userData0 = data;
@@ -380,32 +332,31 @@ export class TestdashComponent implements OnChanges, OnInit {
     });
     this.success('Dashboard saved successfully');
   }
-
-
-
+ 
   SharePage(email) {
     this.authService.authState.subscribe((user) => {
-    this.MyEmail = user.email;
+      this.MyEmail = user.email;
       if (email != this.MyEmail) {
         this.ShareCurrentPage(email, user.name)
       }
     })
   }
+ 
   ShareCurrentPage(email, username) {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
       currentParam = +this.route.snapshot.paramMap.get('id');
       this._dataService.GetUserID();
-      var ddd:string
-      var mmm:string
-      var date:string
+      var ddd: string
+      var mmm: string
+      var date: string
       var today = new Date();
       var dd = today.getDate();
       var mm = today.getMonth() + 1; //January is 0!
       var yyyy = today.getFullYear();
 
       if (dd < 10) {
-        ddd =( '0' + dd).toString()
+        ddd = ('0' + dd).toString()
       }
 
       if (mm < 10) {
@@ -413,13 +364,13 @@ export class TestdashComponent implements OnChanges, OnInit {
       }
 
       date = mm + '/' + dd + '/' + yyyy;
-      console.log('date :',date)
+      console.log('date :', date)
       let obj =
         {
           "pageid": currentParam,
           "userid": this.ActiveUserID,
           "username": username,
-          "date":date
+          "date": date
         }
       this._dataService.SharePageByUserID(email, obj)
 
@@ -427,24 +378,26 @@ export class TestdashComponent implements OnChanges, OnInit {
     Sub.unsubscribe();
 
   }
+ 
   ngOnInit() {
     this.Listwidgets = this.GetWidgetsFromIndex()
 
-    
+
     this.route.params.subscribe(data => {
-      
+
       console.log('test', this.items);
       this.Sharing = this.route.snapshot.data[0]['Sharing'];
-      console.log('Sharing : ',this.Sharing)
-      if(this.Sharing==false){
-      this._dataService.GetUserID().subscribe((id) => {
-        this.onStart(+id.text(), +this.route.snapshot.paramMap.get('id'));
-        this.ActiveUserID = +id.text()
-      })}
-      else if(this.Sharing==true){
-        this.isButtonVisible=false
-        this.onStart(+this.route.snapshot.paramMap.get('UserID'), 
-        +this.route.snapshot.paramMap.get('PageID')); 
+      console.log('Sharing : ', this.Sharing)
+      if (this.Sharing == false) {
+        this._dataService.GetUserID().subscribe((id) => {
+          this.onStart(+id.text(), +this.route.snapshot.paramMap.get('id'));
+          this.ActiveUserID = +id.text()
+        })
+      }
+      else if (this.Sharing == true) {
+        this.isButtonVisible = false
+        this.onStart(+this.route.snapshot.paramMap.get('UserID'),
+          +this.route.snapshot.paramMap.get('PageID'));
       }
       this.CurrentPageID = +this.route.snapshot.paramMap.get('id');
       console.log('test after', this.items)
