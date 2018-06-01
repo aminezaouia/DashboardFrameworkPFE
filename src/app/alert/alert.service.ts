@@ -22,6 +22,7 @@ export class AlertService {
                     this.clear();
                 }
             }
+         
         });
     }
  

@@ -338,6 +338,7 @@ export class TestdashComponent implements OnChanges, OnInit {
         this.ShareCurrentPage(email, user.name)
       }
     })
+    
   }
  
   ShareCurrentPage(email, username) {
