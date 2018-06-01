@@ -1,0 +1,7 @@
+    <div class="gridster-item-content">
+      <label for="name">Put Your Note here</label>
+      <input type="text" #newnote  id="newnote" required>
+      <h1>{{newnote.value}}</h1>
+      <button (click)="SaveNote(newnote.value)"> Save</button>
+    {{StoredData}}
+  </div>

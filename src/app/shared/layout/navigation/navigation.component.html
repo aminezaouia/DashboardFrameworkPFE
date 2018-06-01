@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<aside id="left-panel">
+
+  <nav>
+
+    <ul saSmartMenu>
+
+      <li routerLinkActive="active">
+        <a routerLink="/home" title="Home">
+          <i class="fa fa-lg fa-fw fa-home"></i>
+          <span class="">{{' Home' | i18n}}</span>
+        </a>
+      </li>
+
+      <li>
+
+        <a href="#">
+          <i class="fa fa-lg fa-fw fa-pencil-square-o"></i>
+          <span class="menu-item-parent">{{'My Dashboards' | i18n}}</span>
+        </a>
+        <ul>
+          <li routerLinkActive="active" *ngFor="let page of pages">
+            <a [routerLink]="['/home/dashboards/page',page.id]"> {{ page.name | i18n}}
+            </a>
+          </li>
+          <li>
+            <a class="" data-toggle="modal" data-target="#addpagemodal">{{'' | i18n}}
+
+              <i class="fa fa-plus-square-o" style="font-size:25px;color:white"></i>
+
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa fa-share-alt"></i>
+          <span class="menu-item-parent">{{'Shared Dashboards' | i18n}}</span>
+        </a>
+        <ul>
+          <li routerLinkActive="active" *ngFor="let page of SharedPages">
+            <!-- <a [routerLink]="['/home/dashboards/page',page.id]" >  {{ page.name  | i18n}} 
+               </a>      -->
+
+            <a (click)="ShowSharedPage(page.pageid,page.userid)"
+             style="color: floralwhite"> Shared by {{ page.username| i18n}} at {{page.date| i18n}}
+              <!-- <i class="fa fa-close" ></i> -->
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <sa-minify-menu></sa-minify-menu>
+
+
+</aside>
+
+<div class="modal fade" id="addpagemodal" tabindex="-1" role="dialog" aria-labelledby="Add Modal " aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Put the name of the new dashboard</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" #newname id="newname" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="AddNewPage(newname.value)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

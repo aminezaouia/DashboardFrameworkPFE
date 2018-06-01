@@ -1,0 +1,12 @@
+<p>
+  calc works!
+</p>
+<div class="gridster-item-content">
+  <label for="name">A</label>
+  <input type="text" #A id="A" required>
+  <h1>+</h1>
+  <label for="name">B</label>
+  <input type="text" #B id="B" required>
+  <h1>{{Result}}</h1>
+  <button (click)="calc(A.value,B.value)"> Calc</button>
+</div>
