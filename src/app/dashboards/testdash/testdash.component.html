@@ -100,7 +100,7 @@
     <alert></alert>
   <gridster-item *ngFor="let item of items;   let i=index" [item]="item"   (UpdateItem)="onChangeItem($event)">
       <div class="gridster-item-content" > 
-    <a class="" (click)="DeleteWidget(item,$event)"  [hidden]="hide">{{'' | i18n}}
+    <a class="" (click)="DeleteWidget(item,$event)" *ngIf="this.isButtonVisible" [hidden]="hide">{{'' | i18n}}
           <i class="fa fa-times" style="font-size:20px;color:black;padding-left:1% "></i>
       </a>
       
@@ -115,8 +115,6 @@
           </ndc-dynamic>
           </div>
       </kendo-pdf-export>
-      {{item.OldData}}
-    
   </gridster-item>
  
 </gridster>
