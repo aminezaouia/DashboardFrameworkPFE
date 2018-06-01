@@ -5,8 +5,9 @@
 ## How to add a widget to the project
  
 *  Navigate to    :   \DashboardFrameworkPFE\src\app\dashlets\simpledashlets\
-*  Copie-past your component there
+*  Copie-paste your component there
 *  Import your component in index.ts like the samples provided 
+And that's it ^^
 
 
 
