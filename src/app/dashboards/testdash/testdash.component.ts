@@ -78,12 +78,10 @@ export class TestdashComponent implements OnChanges, OnInit {
   public showChildModal(): void {
     this.lgModal.show();
   }
-
   public hideChildModal(): void {
 
     this.lgModal.hide();
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     const DataForSave: SimpleChange = changes.name;

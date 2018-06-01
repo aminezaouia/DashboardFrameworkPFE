@@ -17,12 +17,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      if (user != null) {
-this.user=user;
-console.log(user.photoUrl)
-      }
-    })
+   
   }
 
 showPopup(){

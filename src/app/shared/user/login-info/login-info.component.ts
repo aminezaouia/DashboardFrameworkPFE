@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {LayoutService} from "../../layout/layout.service";
+import { AuthService } from 'angularx-social-login';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 
@@ -12,19 +14,22 @@ export class LoginInfoComponent implements OnInit {
   user:any;
 
   constructor(
-    private userService: UserService,
-              private layoutService: LayoutService) {
+    private authService: AuthService,private route:Router) {
   }
 
   ngOnInit() {
-    this.userService.getLoginInfo().subscribe(user => {
-      this.user = user
+  
+    this.authService.authState.subscribe((user) => {
+      if (user != null) {
+this.user=user;
+console.log(user.photoUrl)
+      }
     })
-
   }
 
-  toggleShortcut() {
-    this.layoutService.onShortcutToggle()
+  gohome(){
+    this.route.navigateByUrl('/')
+
   }
 
 }
