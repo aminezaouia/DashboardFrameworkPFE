@@ -24,6 +24,10 @@ import { AuthService } from 'angularx-social-login';
 export class DataService {
 	private actionUrl: string;
 	queryUrl: string = '?search=';
+	UserURL: string =	'http://localhost:53760/api/users/'
+	AccountsURL: string =	'http://localhost:53760/api/Accounts/'
+	dataURL: string ='http://localhost:53760/api/data/'
+	SharedDashboardsURL: string ='http://localhost:53760/api/SharedDashboards/'
 
 	constructor(private http: Http, private httpclient: HttpClient,
 		private dashboardGridsterConfigService: DashboardGridsterConfigService, private authService: AuthService) { }
@@ -43,7 +47,7 @@ export class DataService {
 	public update(obj: IUser, id: number): Observable<any> {
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/json')
-		return this.http.put('http://localhost:53760/api/users/' + id, JSON.stringify(obj), { headers: headers })
+		return this.http.put(this.UserURL + id, JSON.stringify(obj), { headers: headers })
 			.map(() => obj)
 			.do(data => console.log('updated: ' + JSON.parse(JSON.stringify(data || null))));
 	}
@@ -77,19 +81,19 @@ export class DataService {
 	// }
 	GetUserByEmail(email) {
 
-		return this.http.get('http://localhost:53760/api/Accounts/' + email)
+		return this.http.get(this.AccountsURL + email)
 	}
 	GetUser(id) {
-		return this.http.get('http://localhost:53760/api/users/' + id)
+		return this.http.get(this.UserURL + id)
 			.map(res => res.json());
 	}
 	GetPagesByUserID(id) {
-		return this.http.get('http://localhost:53760/api/data/' + id)
+		return this.http.get(this.dataURL + id)
 			.map(res => res.json());
 	}
 
 	DeletePage(UserID, PageID) {
-		return this.http.delete('http://localhost:53760/api/data/' + UserID)
+		return this.http.delete(this.dataURL + UserID)
 			.map(res => res.json());
 	}
 
@@ -100,7 +104,7 @@ export class DataService {
 	}
 	GetMySharedPages(id){
 		
-		return this.http.get('http://localhost:53760/api/SharedDashboards/' + id)
+		return this.http.get(this.SharedDashboardsURL + id)
 	
 	}
 
