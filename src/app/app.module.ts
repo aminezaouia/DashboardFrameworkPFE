@@ -48,6 +48,7 @@ import { SignpageComponent } from './signpage/signpage.component';
 import { LoginComponent } from './login/login.component';
 import { SocialLoginModule } from 'angularx-social-login';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import { TodoService } from './dashlets/simpledashlets/todo-widget/todo.service';
 
 const config = new AuthServiceConfig([
   {
@@ -87,7 +88,8 @@ type StoreType = {
     BrowserModule,HttpClientModule,
     BrowserAnimationsModule,HttpModule,AlertModule,
     FormsModule,SocialLoginModule,
-    GridsterModule, MatIconModule, MatButtonModule, MatSelectModule, MatInputModule, MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatListModule,
+    GridsterModule, MatIconModule, MatButtonModule, MatSelectModule, MatInputModule,
+     MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatListModule,
     GridsterModule,ModalModule,
     ModalModule.forRoot(),ChartsModule
 
@@ -101,7 +103,7 @@ type StoreType = {
 
   
   ],
-  providers: [DashboardGridsterConfigService ,// expose our Services and Providers into Angular's dependency injection
+  providers: [DashboardGridsterConfigService ,TodoService,// expose our Services and Providers into Angular's dependency injection
     // ENV_PROVIDERS,
     APP_PROVIDERS,DataService, AuthService,AlertService,SelfalertComponent,   {
       provide: AuthServiceConfig,

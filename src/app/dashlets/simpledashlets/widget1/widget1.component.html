@@ -1,12 +1,15 @@
 <div>
-
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+  <div >
+    <canvas  baseChart #chart
+    
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+    [chartType]="barChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)" ></canvas>
+ </div>
+    
           </div>
   <!-- <button (click)="randomize()">Update</button> -->

@@ -1,27 +1,30 @@
 import {Injectable} from '@angular/core';
 import {Subject} from "rxjs/Subject";
 import {Todo} from "./todo";
+import { DashletBaseComponent } from '../../dashletbase/WidgetBase/dashletbase';
 
 
 @Injectable()
-export class TodoService {
-
+export class TodoService extends DashletBaseComponent {
+//constructor(){super()}
   public subject:Subject<any>;
 
-  public todos: Array<Todo> = [
+  public todos: Array<Todo> =[
     new Todo('Release', 'Critical'),
     new Todo('Misc', 'Important'),
     new Todo('E-commerce', 'Important'),
   ];
 
   states = [
-    {name: "Critical", title: "Critical Tasks", icon: "warning"},
+    {name: "Critical",  title: "Critical Tasks", icon: "warning"},
     {name: "Important", title: "Important Tasks", icon: "exclamation"},
     {name: "Completed", title: "Completed Tasks", icon: "check"}
   ];
 
   constructor() {
+    super();
     this.subject = new Subject();
+    
   }
 
   createTodo(todo:Todo) {

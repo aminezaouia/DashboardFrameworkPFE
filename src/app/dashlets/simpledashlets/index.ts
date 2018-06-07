@@ -15,11 +15,13 @@ import { CalcComponent } from './calc/calc.component';
 //Add the new component and all the components used in it in  EntryComponent 
 export const EntryComponent: Array<any> = [NoteComponent, PieComponent, BirdEyeComponent,
     LinechartComponent, LiveFeedsComponent, RevenueComponent, SocialNetworkComponent,
-    LiveStatsComponent, barchart,CalcComponent];
+    LiveStatsComponent,barchart,CalcComponent];
 export const DeclarationComponent=EntryComponent;
 
 //Add the icon and the name of the widget in Library
 export const Library: Array<any> = [
+   // { 'component':TodoWidgetComponent , 'name': 'Todo App ', 'icon': '' },
+
     { 'component':CalcComponent , 'name': 'calculator ', 'icon': 'fa fa-calculator' },
     { 'component': NoteComponent, 'name': 'Note', 'icon': 'fa fa-edit' },
     { 'component': PieComponent, 'name': 'Pie chart', 'icon': 'fa fa-pie-chart' },

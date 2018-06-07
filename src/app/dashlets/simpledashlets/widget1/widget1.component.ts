@@ -1,37 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as Chart from 'chart.js';
 import 'chart.js'
-import { DataService } from "../../dashletbase/dataservice.service";
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+declare var $: any;
 @Component({
   selector: 'app-widget1',
   templateUrl: './widget1.component.html',
   styleUrls: ['./widget1.component.css']
 })
+export class barchart implements OnInit {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-export class barchart {
-  constructor(private _dataService: DataService) { };
-  data:Array<string>=[]
+
+  data: Array<string> = []
   ApiEndPoint: string = " http://localhost:3000/BarChartApi";
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
+  public Ready: Promise<boolean>;
+  getDataFromBackend() {
+    let datax = [];
+    let datay = [];
+    $.getJSON('http://localhost:3000/data', function (jsondata) {
+      console.log('all data', jsondata);
+      console.log('precise', jsondata[0]._id);
+      this.barChartLabels = [];
+      for (let i = 0; i < jsondata.length; i++) {
+        datax.push((jsondata[i]._id));
+        datay.push((+jsondata[i].user_number));
+        this.barChartLabels.push(jsondata[i]._id);
+      }
+      console.log('inside', this.barChartLabels)
+      this.ready = Promise.resolve(true);;
 
+    });
+    setTimeout(() => {
+      console.log('chart ', this.chart)
+      this.chart.chart.data.labels = datax
+      this.chart.chart.data.datasets[0].data = datay
+      console.log('chart', this.chart)
+      this.chart.chart.scales["y-axis-0"].options.ticks.beginAtZero = true;
+      this.chart.chart.update();
+    }, 1000)
 
-  public barChartLabels: Array<string> =['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-
-  getData() {
-    this._dataService.PumpData(this.ApiEndPoint).subscribe((data: any) => {
-     this.data=data[0].years;
-      
-    });return this.data
 
   }
+
+
+  public barChartLabels: Array<string>;
+  public barChartType: string = 'bar';
+  public barChartLegend: boolean = true;
+  isDataAvailable: boolean = false;
+  ngOnInit() {
+    this.getDataFromBackend();
+
+  }
+
+
+
   public barChartData: any[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+    { data: [], label: 'number of user' }
+
   ];
 
   // events

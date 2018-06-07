@@ -254,10 +254,11 @@ export class TestdashComponent implements OnChanges, OnInit {
     this._dataService.GetPagesByUserID(UserId)
       .subscribe((data: data) => {
         this.userData0 = data;
-
+if(data){
         this.ListBeforEdit = this.GetItemsByPage(PageID, data);
         this.LoadItems(this.ListBeforEdit);
-        this.items = this.ListAfterEdit;
+        this.items = this.ListAfterEdit;}
+        else{this.items=[]}
         console.log(this.items);
       });
   }
