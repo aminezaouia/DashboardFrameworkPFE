@@ -40,6 +40,8 @@
     </div>
   </div>
 
+  
+
   <div class="modal" bsModal #lgModal3="bs-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -62,7 +64,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle"> Put the email of the person with whom you want to share this page</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle"> Put the email of the person you want to share this page with</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -87,6 +89,9 @@
 <a *ngIf="this.isButtonVisible"  (click)="showChildModal()" class="" matTooltip="Tooltip!" matTooltipShowDelay="1000"><i class="	glyphicon glyphicon-plus" style="font-size:22px;color:black;padding-left:1% "></i></a>
 <a *ngIf="this.isButtonVisible"  class="" (click)="showDeletePagePopup()" >{{'' | i18n}}
     <i class="fa fa-trash-o" style="font-size:25px;color:black;padding-left:1% "></i>
+</a>
+<a *ngIf="!this.isButtonVisible"  class="" (click)="showDeleteSharedPagePopup()" >{{'' | i18n}}
+  <i class="fa fa-trash-o" style="font-size:25px;color:black;padding-left:1% "></i>
 </a>
 <a *ngIf="this.isButtonVisible" class="" (click)="Save()" >{{'' | i18n}}
     <i class=" glyphicon glyphicon-floppy-disk" style="font-size:20px;color:black;padding-left:1% "></i>

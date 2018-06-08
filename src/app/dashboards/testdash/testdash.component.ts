@@ -137,6 +137,26 @@ export class TestdashComponent implements OnChanges, OnInit {
       }
     });
   }
+  
+  DeleteSharedPage() {
+    console.log('', this.route.snapshot.params.UserID);
+  }
+
+  showDeleteSharedPagePopup() {
+    this.notificationService.smartMessageBox({
+      title: "<i class='fa fa-trash-o'></i>  Delete this Dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
+      content: `  Are you sure you want to delete this shared page
+  
+      `,
+      buttons: '[No][Yes]'
+
+    }, (ButtonPressed) => {
+      if (ButtonPressed == "Yes") {
+        this.DeleteSharedPage()
+
+      }
+    });
+  }
 
   RemoveWidgetFromPage(UserID, pageId, Item) {
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
@@ -184,7 +204,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     this.items[i].OldData = data;
 
   }
- 
+
   addwidget(component, name, id) {
     var itemToPush: GridsterItem;
     this.items.push({ cols: 3, rows: 4, widget: component, name: name, pageID: id });
@@ -206,7 +226,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     Sub.unsubscribe();
 
   }
-  
+
   GetWidgetID(widget) {
     var find: boolean = false;
     var i: number = 0;
@@ -215,7 +235,7 @@ export class TestdashComponent implements OnChanges, OnInit {
 
     } return i + 1;
   }
- 
+
   LoadItems(listloaded) {
     for (let i = 0; i < listloaded.length; i++) {
       var x = this.find_widget_by_index(listloaded[i].name, this.Listwidgets);
@@ -224,7 +244,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     this.ListAfterEdit = listloaded;
     return listloaded;
   }
-  
+
   find_widget_by_index(index, list) {
     var found: boolean;
     found = false;
@@ -235,7 +255,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       }
     }
   }
-  
+
   GetItemsByPage(id, pages) {
     var find: boolean = false;
     var i: number = 0;
@@ -249,16 +269,17 @@ export class TestdashComponent implements OnChanges, OnInit {
     }
     else return this.DefaultItems;
   }
-  
+
   onStart(UserId, PageID) {
     this._dataService.GetPagesByUserID(UserId)
       .subscribe((data: data) => {
         this.userData0 = data;
-if(data){
-        this.ListBeforEdit = this.GetItemsByPage(PageID, data);
-        this.LoadItems(this.ListBeforEdit);
-        this.items = this.ListAfterEdit;}
-        else{this.items=[]}
+        if (data) {
+          this.ListBeforEdit = this.GetItemsByPage(PageID, data);
+          this.LoadItems(this.ListBeforEdit);
+          this.items = this.ListAfterEdit;
+        }
+        else { this.items = [] }
         console.log(this.items);
       });
   }
@@ -269,7 +290,7 @@ if(data){
       return data.snapshot.paramMap.get('id') - 1;
     });
   }
- 
+
   DeletePageFromData(PageId, UserID) {
     var pages: string
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
@@ -293,20 +314,17 @@ if(data){
       this._dataService.ChangeOldUser(UserID, this.pagesAfterDelete);
     });
   }
- 
+
   DeletePage() {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
       currentParam = +this.route.snapshot.paramMap.get('id');
       this.DeletePageFromData(currentParam, this.ActiveUserID);
     });
-
     Sub.unsubscribe();
     this.router.navigate(['']);
-
-
   }
- 
+
   Save() {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
@@ -315,7 +333,7 @@ if(data){
     });
     Sub.unsubscribe();
   }
- 
+
   SaveDashboardState(UserID, pageId, UpdatedItems) {
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
       this.userData0 = data;
@@ -331,7 +349,7 @@ if(data){
     });
     this.success('Dashboard saved successfully');
   }
- 
+
   SharePage(email) {
     this.authService.authState.subscribe((user) => {
       this.MyEmail = user.email;
@@ -339,9 +357,8 @@ if(data){
         this.ShareCurrentPage(email, user.name)
       }
     })
-    
   }
- 
+
   ShareCurrentPage(email, username) {
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
@@ -378,13 +395,10 @@ if(data){
     Sub.unsubscribe();
 
   }
- 
+
   ngOnInit() {
     this.Listwidgets = this.GetWidgetsFromIndex()
-
-
     this.route.params.subscribe(data => {
-
       console.log('test', this.items);
       this.Sharing = this.route.snapshot.data[0]['Sharing'];
       console.log('Sharing : ', this.Sharing)
@@ -403,7 +417,7 @@ if(data){
       console.log('test after', this.items)
     });
     this.config = this.dashboardGridsterConfigService.getConfig();
-
+    console.log('test ', AllDashboards.GSharedPages)
   }
 
 }

@@ -17,7 +17,6 @@ import { NavigationStart } from '@angular/router';
 import { NotificationService } from '../../utils/notification.service';
 declare var $: any;
 @Component({
-
   selector: 'sa-navigation',
   templateUrl: './navigation.component.html'
 })
@@ -32,7 +31,6 @@ export class NavigationComponent implements OnInit {
     private authService: AuthService, public route: ActivatedRoute,
     private notificationService: NotificationService) {
   }
-
   private routeSub: any;
   public ngOnDestroy() {
     this.routeSub.unsubscribe();
@@ -44,7 +42,6 @@ export class NavigationComponent implements OnInit {
   public hideChildModal(): void {
     this.lgModal.hide();
   }
-
   showAddPagePopup(name) {
     this.notificationService.smartMessageBox({
       title: "<i class='fa fa-trash-o'></i>  Add a new dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
@@ -125,6 +122,11 @@ export class NavigationComponent implements OnInit {
     this._dataService.GetMySharedPages(id).subscribe((list) => {
       console.log('my shared pages', JSON.parse(list.text()));
       this.SharedPages = JSON.parse(list.text())
+      for (let index = 0; index <  this.SharedPages.length; index++) {
+      AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
+    
+      }
+
     });
   }
   ShowSharedPage(pageid, userid) {
