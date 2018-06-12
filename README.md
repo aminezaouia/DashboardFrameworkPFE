@@ -1,7 +1,5 @@
 # Dashboard Framework
 
-
-
 ## How to add a widget to the project
  
 *  Navigate to    :   \DashboardFrameworkPFE\src\app\dashlets\simpledashlets\
@@ -10,7 +8,7 @@
 
 If  you want to use our features like saving the state of the widget and load it to let the user continue from where he left every time he opens the application, you will just extends our class named 'DashletBaseComponent'
 
-In this class you can use the method 'SaveContentState(data)' and you will find you previous data in an attribute named 'StoredData'
+In this class you can use the method 'SaveContentState(data)' and you will find your previous data in an attribute named 'StoredData'
 
 
 
