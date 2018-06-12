@@ -5,9 +5,9 @@ import { TestdashComponent, data, user } from '../../../dashboards/testdash/test
 import { DataService } from "../../../dashlets/dashletbase/dataservice.service";
 import { GridsterItem } from 'angular-gridster2/dist/gridsterItem.interface';
 import { ModalDirective } from 'ngx-bootstrap';
-import { forEach } from '@angular/router/src/utils/collection';
+//import { forEach } from '';
 import { currentId } from 'async_hooks';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { Router, ParamMap, UrlSegment } from '@angular/router';
 import { AuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { ComponentCanDeactivate } from "./pending-changes.guard";
 import { Observable } from 'rxjs';
 import { NavigationStart } from '@angular/router';
 import { NotificationService } from '../../utils/notification.service';
+import 'rxjs/add/operator/take';
 declare var $: any;
 @Component({
   selector: 'sa-navigation',
@@ -27,7 +28,7 @@ export class NavigationComponent implements OnInit {
   newname: string = "default";
   CurrentUser: number;
   user: IUser;
-  constructor(private _dataService: DataService, private router: Router,
+  constructor(private _dataService: DataService, public router: Router,
     private authService: AuthService, public route: ActivatedRoute,
     private notificationService: NotificationService) {
   }
@@ -125,7 +126,7 @@ export class NavigationComponent implements OnInit {
       for (let index = 0; index <  this.SharedPages.length; index++) {
       AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
     
-      }
+      }console.log('see this',AllDashboards.GSharedPages)
 
     });
   }
@@ -138,6 +139,31 @@ export class NavigationComponent implements OnInit {
       , { UserID: userid, PageID: pageid }
     ]);
   }
+
+  DeleteSharedPage() {
+    this.route.params.take(1).subscribe((params: any) => {
+      let userId = params['UserID'];
+      console.log(userId);
+    });
+  }
+
+  showDeleteSharedPagePopup() {
+    this.notificationService.smartMessageBox({
+      title: "<i class='fa fa-trash-o'></i>  Delete this Dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
+      content: `  Are you sure you want to delete this shared page
+  
+      `,
+      buttons: '[No][Yes]'
+
+    }, (ButtonPressed) => {
+      if (ButtonPressed == "Yes") {
+        this.DeleteSharedPage()
+
+      }
+    });
+  }
+
+
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
       if (user == null) {
@@ -148,6 +174,7 @@ export class NavigationComponent implements OnInit {
       this.CurrentUser = +id.text();
       this.GetPagesByUser(+id.text());
       this.GetSharedPages(+id.text())
+
     })
 
     this.routeSub = this.router.events.subscribe((event) => {
@@ -156,8 +183,11 @@ export class NavigationComponent implements OnInit {
         this.GetPagesByUser(this.CurrentUser)
 
         console.log('pages updated')
+      
       }
     });
+  
+    
   }
 }
 export interface IUser {

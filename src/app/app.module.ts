@@ -7,6 +7,7 @@ import { DynamicModule } from 'ng-dynamic-component';
 import { FusionChartsModule } from 'angular4-fusioncharts';
 import {DataService} from "../app/dashlets/dashletbase/dataservice.service";
 
+
 import { FormsModule } from '@angular/forms';
 /*
  * Platform and Environment providers/directives/pipes

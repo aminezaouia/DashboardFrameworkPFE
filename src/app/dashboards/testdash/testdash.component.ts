@@ -138,25 +138,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     });
   }
   
-  DeleteSharedPage() {
-    console.log('', this.route.snapshot.params.UserID);
-  }
-
-  showDeleteSharedPagePopup() {
-    this.notificationService.smartMessageBox({
-      title: "<i class='fa fa-trash-o'></i>  Delete this Dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
-      content: `  Are you sure you want to delete this shared page
   
-      `,
-      buttons: '[No][Yes]'
-
-    }, (ButtonPressed) => {
-      if (ButtonPressed == "Yes") {
-        this.DeleteSharedPage()
-
-      }
-    });
-  }
 
   RemoveWidgetFromPage(UserID, pageId, Item) {
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
@@ -348,6 +330,11 @@ export class TestdashComponent implements OnChanges, OnInit {
       this._dataService.ChangeOldUser(UserID, DataString);
     });
     this.success('Dashboard saved successfully');
+    this.route.params.take(1).subscribe((params: any) => {
+      let userId = params['UserID'];
+      console.log(userId);
+    });
+    
   }
 
   SharePage(email) {

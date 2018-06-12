@@ -22,7 +22,7 @@ export class LoginInfoComponent implements OnInit {
       }
     })
   }
-
+  
   gohome() {
     this.route.navigateByUrl('/')
 

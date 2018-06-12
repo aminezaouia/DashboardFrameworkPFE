@@ -14,7 +14,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { DashboardGridsterConfigService } from '../../dashboards/testdash/dashboard-gridster-config.service';
-import { resolveToFunctionSelector } from '@angular-redux/store/lib/src/components/selectors';
+//import { resolveToFunctionSelector } from '@angular-redux/store/lib/src/components/selectors';
 import { ListWidgetsByDashboardId } from '../../dashboards/dashboardList';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Options } from 'selenium-webdriver/edge';
