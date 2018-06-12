@@ -38,13 +38,12 @@
           <li routerLinkActive="active" *ngFor="let page of SharedPages">
             <!-- <a [routerLink]="['/home/dashboards/page',page.id]" >  {{ page.name  | i18n}} 
                </a>      -->
-            <a (click)="ShowSharedPage(page.pageid,page.userid)"
-             style="color: floralwhite"> Shared by {{ page.username| i18n}} at {{page.date| i18n}}
+            <a (click)="ShowSharedPage(page.pageid,page.userid)" style="color: floralwhite"> Shared by {{ page.username| i18n}} at {{page.date| i18n}}
               <!-- <i class="fa fa-close" ></i> -->
             </a>
           </li>
           <li>
-            <a   class="" (click)="showDeleteSharedPagePopup()" >{{'' | i18n}}
+            <a class="" (click)="showDeleteSharedPagePopup()">{{'' | i18n}}
               <i class="fa fa-trash-o" style="font-size:25px;color:white;padding-left:1% "></i>
             </a>
           </li>

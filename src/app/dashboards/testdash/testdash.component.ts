@@ -9,10 +9,7 @@ import * as all from '../listwidgets/listwidgets.component'
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Router, ParamMap, ActivatedRoute, UrlSegment } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-import { NgComponentOutlet } from '@angular/common';
 import { ModalDirective } from 'ngx-bootstrap';
-import { barchart } from '../../dashlets/simpledashlets/widget1/widget1.component';
-import { PieComponent } from '../../dashlets/simpledashlets/pie/pie.component';
 import { PdfViewerComponent } from "../../dashlets/simpledashlets/pdfviewer/pdfviewer.component";
 import { DataService } from "../../dashlets/dashletbase/dataservice.service";
 import { GridsterItemIndex } from "../../dashlets/dashletbase/gridsteritem";
@@ -29,9 +26,6 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { deepEqual, notEqual } from 'assert';
 import { AlertComponent } from '../../alert/alert.component';
 import { AlertService } from '../../alert/alert.service';
-import { LinechartComponent } from "../../dashlets/simpledashlets/linechart/linechart.component";
-import { BirdEyeComponent } from '../../dashlets/simpledashlets/bird-eye/bird-eye.component';
-import { LiveFeedsComponent } from '../../dashlets/simpledashlets/live-feeds/live-feeds.component';
 import { Library } from '../../dashlets/simpledashlets'
 import { DynamicComponent, IOMapInfo } from 'ng-dynamic-component';
 import { AuthService } from 'angularx-social-login';
@@ -72,7 +66,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     public dashboardGridsterConfigService: DashboardGridsterConfigService,
     private alertService: AlertService, private alert: SelfalertComponent,
     public _dataService: DataService, private authService: AuthService,
-    private spinnerService: Ng4LoadingSpinnerService ,private notificationService: NotificationService) {
+    private spinnerService: Ng4LoadingSpinnerService, private notificationService: NotificationService) {
   }
 
 
@@ -139,8 +133,6 @@ export class TestdashComponent implements OnChanges, OnInit {
       }
     });
   }
-  
-  
 
   RemoveWidgetFromPage(UserID, pageId, Item) {
     this._dataService.GetPagesByUserID(UserID).subscribe((data: any) => {
@@ -336,7 +328,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       let userId = params['UserID'];
       console.log(userId);
     });
-    
+
   }
 
   SharePage(email) {
@@ -372,12 +364,12 @@ export class TestdashComponent implements OnChanges, OnInit {
       date = mm + '/' + dd + '/' + yyyy;
       console.log('date :', date)
       let obj =
-        {
-          "pageid": currentParam,
-          "userid": this.ActiveUserID,
-          "username": username,
-          "date": date
-        }
+      {
+        "pageid": currentParam,
+        "userid": this.ActiveUserID,
+        "username": username,
+        "date": date
+      }
       this._dataService.SharePageByUserID(email, obj)
 
     });
@@ -411,7 +403,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     console.log('test ', AllDashboards.GSharedPages)
     setTimeout(() => {
       this.spinnerService.hide();
-    }, 1000); 
+    }, 1000);
 
   }
 }

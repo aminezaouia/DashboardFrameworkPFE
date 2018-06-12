@@ -123,10 +123,10 @@ export class NavigationComponent implements OnInit {
     this._dataService.GetMySharedPages(id).subscribe((list) => {
       console.log('my shared pages', JSON.parse(list.text()));
       this.SharedPages = JSON.parse(list.text())
-      for (let index = 0; index <  this.SharedPages.length; index++) {
-      AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
-    
-      }console.log('see this',AllDashboards.GSharedPages)
+      for (let index = 0; index < this.SharedPages.length; index++) {
+        AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
+
+      } console.log('see this', AllDashboards.GSharedPages)
 
     });
   }
@@ -183,11 +183,11 @@ export class NavigationComponent implements OnInit {
         this.GetPagesByUser(this.CurrentUser)
 
         console.log('pages updated')
-      
+
       }
     });
-  
-    
+
+
   }
 }
 export interface IUser {
