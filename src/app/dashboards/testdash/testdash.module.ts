@@ -20,6 +20,7 @@ import {AlertComponent} from "../../alert/alert.component";
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import {DeclarationComponent} from "../../dashlets/simpledashlets/index";
 import {EntryComponent} from "../../dashlets/simpledashlets/index";
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 DeclarationComponent.push(AlertComponent,TestdashComponent,PdfViewerComponent)
 @NgModule({
@@ -29,7 +30,7 @@ DeclarationComponent.push(AlertComponent,TestdashComponent,PdfViewerComponent)
     TestdashRouting,
     FlotChartModule,MatButtonModule, MatCheckboxModule,
     D3Module,TestdashRouting,PdfViewerModule
-    ,GridsterModule,ModalModule,ChartsModule,DynamicModule.withComponents([PdfViewerComponent])
+    ,GridsterModule,ModalModule,ChartsModule,DynamicModule.withComponents([PdfViewerComponent]), Ng4LoadingSpinnerModule.forRoot() 
   ],
   declarations: DeclarationComponent,
   providers: [DashboardGridsterConfigService],

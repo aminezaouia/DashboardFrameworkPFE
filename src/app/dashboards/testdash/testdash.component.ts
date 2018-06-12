@@ -25,6 +25,7 @@ import { DisplayGrid, GridsterComponentInterface, GridType } from 'angular-grids
 import * as jspdf from 'jspdf';
 import { SelfalertComponent } from "../../selfalert/selfalert.component";
 import { currentId } from 'async_hooks';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { deepEqual, notEqual } from 'assert';
 import { AlertComponent } from '../../alert/alert.component';
 import { AlertService } from '../../alert/alert.service';
@@ -70,7 +71,8 @@ export class TestdashComponent implements OnChanges, OnInit {
   constructor(public route: ActivatedRoute, public router: Router,
     public dashboardGridsterConfigService: DashboardGridsterConfigService,
     private alertService: AlertService, private alert: SelfalertComponent,
-    public _dataService: DataService, private authService: AuthService, private notificationService: NotificationService) {
+    public _dataService: DataService, private authService: AuthService,
+    private spinnerService: Ng4LoadingSpinnerService ,private notificationService: NotificationService) {
   }
 
 
@@ -384,6 +386,8 @@ export class TestdashComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
+    this.spinnerService.show();
+
     this.Listwidgets = this.GetWidgetsFromIndex()
     this.route.params.subscribe(data => {
       console.log('test', this.items);
@@ -405,8 +409,11 @@ export class TestdashComponent implements OnChanges, OnInit {
     });
     this.config = this.dashboardGridsterConfigService.getConfig();
     console.log('test ', AllDashboards.GSharedPages)
-  }
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 1000); 
 
+  }
 }
 
 export class widget {

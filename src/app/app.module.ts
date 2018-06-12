@@ -50,7 +50,7 @@ import { LoginComponent } from './login/login.component';
 import { SocialLoginModule } from 'angularx-social-login';
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
 import { TodoService } from './dashlets/simpledashlets/todo-widget/todo.service';
-
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -91,7 +91,7 @@ type StoreType = {
     FormsModule,SocialLoginModule,
     GridsterModule, MatIconModule, MatButtonModule, MatSelectModule, MatInputModule,
      MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatListModule,
-    GridsterModule,ModalModule,
+    GridsterModule,ModalModule, Ng4LoadingSpinnerModule.forRoot() ,
     ModalModule.forRoot(),ChartsModule
 
 
