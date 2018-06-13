@@ -37,6 +37,7 @@ import {
   MatSidenavModule,
   MatTooltipModule,MatIcon,MatIconBase
 } from '@angular/material';
+import { BootstrapSwitchModule } from 'angular2-bootstrap-switch';
 import { DashboardGridsterConfigService } from './dashboards/testdash/dashboard-gridster-config.service';
 //import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/auth.service';
@@ -58,6 +59,7 @@ const config = new AuthServiceConfig([
   }
 ]);
 
+import { EmbedVideo } from 'ngx-embed-video';
 //import { Widget1Component } from './dashlets/simpledashlets/widget1/widget1.component';
 //import { ListwidgetsComponent } from "../../src/app/dashboards/listwidgets/listwidgets.component";
 // Application wide providers
@@ -87,12 +89,13 @@ type StoreType = {
   ],
   imports: [ // import Angular's modules
     BrowserModule,HttpClientModule,
-    BrowserAnimationsModule,HttpModule,AlertModule,
+    BrowserAnimationsModule,HttpModule,AlertModule,  BootstrapSwitchModule.forRoot(),
+    BrowserAnimationsModule,
     FormsModule,SocialLoginModule,
     GridsterModule, MatIconModule, MatButtonModule, MatSelectModule, MatInputModule,
      MatTooltipModule, MatCheckboxModule, MatSidenavModule, MatListModule,
     GridsterModule,ModalModule, Ng4LoadingSpinnerModule.forRoot() ,
-    ModalModule.forRoot(),ChartsModule
+    ModalModule.forRoot(),ChartsModule, EmbedVideo.forRoot()
 
 
     ,CoreModule,
