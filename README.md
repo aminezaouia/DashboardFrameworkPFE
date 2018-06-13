@@ -19,7 +19,7 @@ If  you want to use our features like saving the state of the widget and load it
 In this class you can use the method 'SaveContentState(data)' and you will find your previous data in an attribute named 'StoredData'
 
 ## Provide a demo for the end user
-I you want to help your clients understand how the dashboard and its widgets work, you can create a video showing a demo, and by adding the ID of the YouTube video in the ### YoutubeID attribute and your clients will now be able to watch it when they need help.
+If you want to help your clients understand how the dashboard and its widgets work, you can create a video showing a demo, and by adding the ID of the YouTube video in the 'YoutubeID' attribute and your clients will now be able to watch it when they need help.
  
 ## Testing
 Testing is important for big projects. So we have good old js combo!
