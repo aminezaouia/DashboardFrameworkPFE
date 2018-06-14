@@ -38,6 +38,10 @@ youtubeId = YoutubeID.toString();
     this.ShowHelpPopup()
     document.getElementById("myframe").setAttribute("src", this.videoSource);
    }
+
+   SendFeedBack(){
+     
+   }
    ShowHelpPopup() {
     this.notificationService.smartMessageBox({
       title: "This is a demo to start with ",
