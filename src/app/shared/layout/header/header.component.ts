@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit() { 
      this.logo= document.getElementById("logo-brand") as HTMLImageElement;
-     this.logo.src="http://localhost:4200/"+Logo
+     this.logo.src="http://localhost:4200/assets/img/"+Logo
      //console.log('logo ',this.logo.src)
 }
   showPopup() {

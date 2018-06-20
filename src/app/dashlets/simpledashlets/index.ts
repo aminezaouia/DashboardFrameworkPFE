@@ -30,4 +30,7 @@ export const Library: Array<any> = [
 //the Home page 
 
 export const YoutubeID:string='FUgM105uN4c';
-export const Logo:string='assets/img/logo.png';
+
+//If you want to add a Logo (image) you will have to add the name of the image after adding 
+//it in the 'assets/img'
+export const Logo:string='logo.png';
