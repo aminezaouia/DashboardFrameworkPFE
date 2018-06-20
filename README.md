@@ -24,7 +24,7 @@ If you want to help your clients understand how the dashboard and its widgets wo
  ## Add the client's (company's) logo
 To add a logo to the dashboard you will have to:
 #### * Copie the logo in '\src\assets\img'
-#### * Insert the path in the index file in the variable named 'logo' 
+#### * Insert the name of the image in the index file in the variable named 'logo' 
 
 ## Testing
 Testing is important for big projects. So we have good old js combo!
