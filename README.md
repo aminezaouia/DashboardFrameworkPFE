@@ -21,11 +21,15 @@ In this class you can use the method 'SaveContentState(data)' and you will find 
 ## Provide a demo for the end user
 If you want to help your clients understand how the dashboard and its widgets work, you can create a video showing a demo, and by adding the ID of the YouTube video in the 'YoutubeID' attribute, your clients will now be able to watch it when they need help.
  
+ ## Add the client's (company's) logo
+To add a logo to the dashboard you will have to:
+#### * Copie the logo in '\src\assets\img'
+#### * Insert the path in the index file in the variable named 'logo' 
+
 ## Testing
 Testing is important for big projects. So we have good old js combo!
 
 App is configured for running end-to-end (via [Protractor](http://www.protractortest.org/)) and unit (via [Karma](https://karma-runner.github.io)) tests
-
 `npm run e2e` shortcut for executing end-to-end tests. 
 `npm run test` for unit tests.
 
