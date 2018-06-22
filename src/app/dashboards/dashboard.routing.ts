@@ -1,21 +1,20 @@
-import { ModuleWithProviders } from "@angular/core"
 import { Routes, RouterModule } from '@angular/router';
 import { TestdashComponent } from "./testdash/testdash.component";
-import * as AllDashboards from "../dashboards/dashboardList";
+import { PendingChangesGuard } from "./testdash/guard";
 
 export const routes: Routes = [
-  // {
-  //   path: '', redirectTo: 'testdash', pathMatch: 'full'
-  // },
+
   {
     path: 'testdash',
     loadChildren: './testdash/testdash.module#TestDashModule'
-  }, { path: 'page/:id', component: TestdashComponent,data: [{Sharing: false}] }
+  }, {
+    path: 'page/:id', component: TestdashComponent, data: [{ Sharing: false }]
+    //, canDeactivate: [PendingChangesGuard]
+  }
   ,
   {
-    path: 'sharedpage', component: TestdashComponent,data: [{Sharing: true}],
-  }
-
+    path: 'sharedpage', component: TestdashComponent, data: [{ Sharing: true }],
+  },
 
 ];
 

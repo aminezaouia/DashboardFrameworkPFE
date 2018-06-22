@@ -3,11 +3,15 @@ import { GridsterConfig, DisplayGrid, GridType, CompactType } from 'angular-grid
 
 const DashboardGridsterConfig:GridsterConfig={
   displayGrid: 'onDrag&Resize',
-  minItemCols: 3,
-  minItemRows: 3,
-  minItemArea: 6,
+  minItemCols: 2,
+  minItemRows: 2,
+  minItemArea: 4,
+  maxItemCols:10,
+  maxItemRows:10,
+  isMobile: true,
   gridType:
-   GridType.ScrollVertical, // 'fit' will fit the items in the container without scroll;
+   GridType.ScrollVertical, 
+   fit:true,// 'fit' will fit the items in the container without scroll;
   // 'scrollVertical' will fit on width and height of the items will be the same as the width
   // 'scrollHorizontal' will fit on height and width of the items will be the same as the height
   // 'fixed' will set the rows and columns dimensions based on fixedColWidth and fixedRowHeight options
@@ -20,7 +24,7 @@ const DashboardGridsterConfig:GridsterConfig={
   compactType: "compactUp", // compact items: 'none' | 'compactUp' | 'compactLeft' | 'compactUp&Left' | 'compactLeft&Up'
   mobileBreakpoint: 0, // if the screen is not wider that this, remove the grid layout and stack the items
   minCols: 10, // minimum amount of columns in the grid
-  maxCols: 10, // maximum amount of columns in the grid
+  maxCols: 15, // maximum amount of columns in the grid
   minRows: 20, // minimum amount of rows in the grid
   maxRows: 500,
    // maximum amount of rows in the grid
@@ -31,7 +35,7 @@ const DashboardGridsterConfig:GridsterConfig={
   //minItemCols: 1, // min item number of columns
  // minItemRows: 1, // min item number of rows
  // minItemArea: 1, // min item area: cols * rows
-  maxItemArea: 40, // max item area: cols * rows
+  maxItemArea: 80, // max item area: cols * rows
   margin: 10,  // margin between grid items
   outerMargin: true,  // if margins will apply to the sides of the container
   outerMarginTop: null, // override outer margin for grid

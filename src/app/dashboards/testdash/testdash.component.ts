@@ -1,35 +1,23 @@
-import { Component, OnInit, Inject, ViewChild, Injectable, Input, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable, Input, OnChanges, SimpleChanges, SimpleChange, HostListener, OnDestroy } from '@angular/core';
 import { DashboardGridsterConfigService } from './dashboard-gridster-config.service';
-import { GridsterConfig, GridsterItem, GridsterItemComponent, GridsterItemComponentInterface } from 'angular-gridster2';
-import { ListwidgetsComponent } from "../listwidgets/listwidgets.component";
+import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 import { NotificationService } from "../../shared/utils/notification.service";
-import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import * as AllDashboards from '../dashboardList';
-import * as all from '../listwidgets/listwidgets.component'
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Router, ParamMap, ActivatedRoute, UrlSegment } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { ModalDirective } from 'ngx-bootstrap';
-import { PdfViewerComponent } from "../../dashlets/simpledashlets/pdfviewer/pdfviewer.component";
 import { DataService } from "../../dashlets/dashletbase/dataservice.service";
 import { GridsterItemIndex } from "../../dashlets/dashletbase/gridsteritem";
-import { GridsterItemS } from 'angular-gridster2/dist/gridsterItemS.interface';
-import { Observable } from 'rxjs/Observable';
-import { DashletBaseComponent } from '../../dashlets/dashletbase/WidgetBase/dashletbase';
 import { Subscription } from 'rxjs/Subscription';
 import { } from "module";
-import { DisplayGrid, GridsterComponentInterface, GridType } from 'angular-gridster2';
-import * as jspdf from 'jspdf';
 import { SelfalertComponent } from "../../selfalert/selfalert.component";
-import { currentId } from 'async_hooks';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { deepEqual, notEqual } from 'assert';
-import { AlertComponent } from '../../alert/alert.component';
 import { AlertService } from '../../alert/alert.service';
 import { Library } from '../../dashlets/simpledashlets'
-import { DynamicComponent, IOMapInfo } from 'ng-dynamic-component';
 import { AuthService } from 'angularx-social-login';
 declare var $: any;
+import { ComponentCanDeactivate } from './guard';
+import { Observable } from 'rxjs/Observable';
 //import {} from "../../login/login.component";
 @Component({
   selector: 'app-testdash',
@@ -37,7 +25,11 @@ declare var $: any;
   styleUrls: ['./testdash.component.css'],
 })
 @Injectable()
-export class TestdashComponent implements OnChanges, OnInit {
+export class TestdashComponent implements OnChanges, OnInit, ComponentCanDeactivate, OnDestroy {
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return true
+  }
   Sharing: boolean = false;
   Listwidgets: widget[] = [];
   listitemindex: GridsterItemIndex;
@@ -54,7 +46,7 @@ export class TestdashComponent implements OnChanges, OnInit {
   currentID: number;
   isButtonVisible: boolean = true
   sub: Subscription;
-  @Input() ActiveUserID: number = 4;
+  @Input() ActiveUserID: number;
   Allpages: AllDashboards.Dashboard[] = AllDashboards.ListAll;
   pagesAfterDelete: string;
   public DefaultItems: Array<GridsterItem> = [];
@@ -64,11 +56,11 @@ export class TestdashComponent implements OnChanges, OnInit {
   @Input() DataForSave: string;
   constructor(public route: ActivatedRoute, public router: Router,
     public dashboardGridsterConfigService: DashboardGridsterConfigService,
-    private alertService: AlertService, private alert: SelfalertComponent,
+    private alertService: AlertService,
     public _dataService: DataService, private authService: AuthService,
-    private spinnerService: Ng4LoadingSpinnerService, private notificationService: NotificationService) {
+    private spinnerService: Ng4LoadingSpinnerService,
+    private notificationService: NotificationService) {
   }
-
 
   @ViewChild('lgModal') public lgModal: ModalDirective;
   public showChildModal(): void {
@@ -77,6 +69,11 @@ export class TestdashComponent implements OnChanges, OnInit {
   public hideChildModal(): void {
 
     this.lgModal.hide();
+  }
+
+  ngOnDestroy() {
+    console.log('saved')
+    this.Save();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -157,6 +154,7 @@ export class TestdashComponent implements OnChanges, OnInit {
     var Sub: Subscription = this.route.params.subscribe(param => {
       currentParam = +this.route.snapshot.paramMap.get('id');
       this.RemoveWidgetFromPage(this.ActiveUserID, currentParam, item);
+      this.Save();
     });
 
     Sub.unsubscribe();
@@ -337,6 +335,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       if (email != this.MyEmail) {
         this.ShareCurrentPage(email, user.name)
       }
+
     })
   }
 
@@ -350,7 +349,7 @@ export class TestdashComponent implements OnChanges, OnInit {
       var date: string
       var today = new Date();
       var dd = today.getDate();
-      var mm = today.getMonth() + 1; //January is 0!
+      var mm = today.getMonth() + 1;
       var yyyy = today.getFullYear();
 
       if (dd < 10) {
@@ -371,13 +370,15 @@ export class TestdashComponent implements OnChanges, OnInit {
         "date": date
       }
       this._dataService.SharePageByUserID(email, obj)
-
+      this.success('Dashboard Sahred successfully with ' + username);
     });
     Sub.unsubscribe();
 
   }
 
   ngOnInit() {
+
+
     this.spinnerService.show();
 
     this.Listwidgets = this.GetWidgetsFromIndex()

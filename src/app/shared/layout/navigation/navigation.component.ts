@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import * as AllDashboards from "../../../dashboards/dashboardList";
-import {  data } from '../../../dashboards/testdash/testdash.component';
+import {  data, TestdashComponent } from '../../../dashboards/testdash/testdash.component';
 import { DataService } from "../../../dashlets/dashletbase/dataservice.service";
 import { ModalDirective } from 'ngx-bootstrap';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
