@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import * as AllDashboards from "../../../dashboards/dashboardList";
-import {  data, TestdashComponent } from '../../../dashboards/testdash/testdash.component';
+import { data, TestdashComponent } from '../../../dashboards/testdash/testdash.component';
 import { DataService } from "../../../dashlets/dashletbase/dataservice.service";
 import { ModalDirective } from 'ngx-bootstrap';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Router  } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
 import { NavigationStart } from '@angular/router';
 import { NotificationService } from '../../utils/notification.service';
 import 'rxjs/add/operator/take';
+import { AlertService } from '../../../alert/alert.service';
 declare var $: any;
 @Component({
   selector: 'sa-navigation',
@@ -22,7 +23,7 @@ export class NavigationComponent implements OnInit {
   newname: string = "default";
   CurrentUser: number;
   user: IUser;
-  constructor(private _dataService: DataService, public router: Router,
+  constructor(private _dataService: DataService, private alertService: AlertService, public router: Router,
     private authService: AuthService, public route: ActivatedRoute,
     private notificationService: NotificationService) {
   }
@@ -97,13 +98,28 @@ export class NavigationComponent implements OnInit {
       this._dataService.ChangeOldUser(UserID, DataString);
     });
   }
+  error(message: string) {
+    this.alertService.error(message);
+  }
+
   AddNewPage(newname) {
-    var id: number = 1;
-    for (let index = 0; index < this.pages.length; index++) {
-      if (this.pages[index].id == id) {
-        id++;
+    if (newname == "" || newname == null) {
+      this.error('Insert a valid name and try again')
+
+
+    }
+    else {
+      var id: number = 1;
+      var foundID: boolean = false;
+
+      while (foundID == false) {
+
+        if (this.pages.find(x => x.id == id)) {
+          id++;
+        } else (foundID = true)
       }
     }
+
     this.pages.push(new AllDashboards.Dashboard(id, newname))
     AllDashboards.ListAll.push(new AllDashboards.Dashboard(id, newname))
     let page = {
@@ -113,76 +129,79 @@ export class NavigationComponent implements OnInit {
     }
     this.AddPage(this.CurrentUser, page);
   }
-  GetSharedPages(id) {
-    this._dataService.GetMySharedPages(id).subscribe((list) => {
-      console.log('my shared pages', JSON.parse(list.text()));
-      this.SharedPages = JSON.parse(list.text())
-      for (let index = 0; index < this.SharedPages.length; index++) {
-        AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
 
-      } console.log('see this', AllDashboards.GSharedPages)
+GetSharedPages(id) {
+  this._dataService.GetMySharedPages(id).subscribe((list) => {
+    console.log('my shared pages', JSON.parse(list.text()));
+    this.SharedPages = JSON.parse(list.text())
+    for (let index = 0; index < this.SharedPages.length; index++) {
+      AllDashboards.GSharedPages.push(new AllDashboards.SharedDashboard(this.SharedPages[index].userid, this.SharedPages[0].pageid));
 
-    });
-  }
-  ShowSharedPage(pageid, userid) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: { UserID: userid, PageID: pageid },
-      fragment: 'anchor'
-    };
-    this.router.navigate(['/home/dashboards/sharedpage/'
-      , { UserID: userid, PageID: pageid }
-    ]);
-  }
+    } console.log('see this', AllDashboards.GSharedPages)
 
-  DeleteSharedPage() {
-    this.route.params.take(1).subscribe((params: any) => {
-      let userId = params['UserID'];
-      console.log(userId);
-    });
-  }
+  });
+}
+ShowSharedPage(pageid, userid) {
+  let navigationExtras: NavigationExtras = {
+    queryParams: { UserID: userid, PageID: pageid },
+    fragment: 'anchor'
+  };
+  this.router.navigate(['/home/dashboards/sharedpage/'
+    , { UserID: userid, PageID: pageid }
+  ]);
+}
 
-  showDeleteSharedPagePopup() {
-    this.notificationService.smartMessageBox({
-      title: "<i class='fa fa-trash-o'></i>  Delete this Dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
-      content: `  Are you sure you want to delete this shared page
-  
-      `,
-      buttons: '[No][Yes]'
+DeleteSharedPage() {
+  this.SharedPages = [];
+  this._dataService.DeleteSharedPages(this.CurrentUser).subscribe(() => {
+    this.SharedPages = [];
+    this.router.navigate(['login'])
+  });
 
-    }, (ButtonPressed) => {
-      if (ButtonPressed == "Yes") {
-        this.DeleteSharedPage()
+}
 
-      }
-    });
-  }
+showDeleteSharedPagePopup() {
+  this.notificationService.smartMessageBox({
+    title: "<i class='fa fa-trash-o'></i>  Delete this Dashboard <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
+    content: `  Are you sure you want to delete this shared page`,
+    buttons: '[No][Yes]'
 
+  }, (ButtonPressed) => {
+    if (ButtonPressed == "Yes") {
+      this.DeleteSharedPage()
 
-  ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      if (user == null) {
-        this.router.navigateByUrl('/login');
-      }
-    })
-    this._dataService.GetUserID().subscribe((id) => {
-      this.CurrentUser = +id.text();
-      this.GetPagesByUser(+id.text());
-      this.GetSharedPages(+id.text())
-
-    })
-
-    this.routeSub = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-
-        this.GetPagesByUser(this.CurrentUser)
-
-        console.log('pages updated')
-
-      }
-    });
+    }
+  });
+}
 
 
-  }
+ngOnInit() {
+
+
+  this.authService.authState.subscribe((user) => {
+    if (user == null) {
+      this.router.navigateByUrl('/login');
+    }
+  })
+  this._dataService.GetUserID().subscribe((id) => {
+    this.CurrentUser = +id.text();
+    this.GetPagesByUser(+id.text());
+    this.GetSharedPages(+id.text())
+
+  })
+
+  this.routeSub = this.router.events.subscribe((event) => {
+    if (event instanceof NavigationStart) {
+
+      this.GetPagesByUser(this.CurrentUser)
+
+      console.log('pages updated')
+
+    }
+  });
+
+
+}
 }
 export interface IUser {
   id: number;

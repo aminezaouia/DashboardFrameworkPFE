@@ -47,7 +47,6 @@ export class barchart implements OnInit {
 
   }
 
-
   public barChartLabels: Array<string>;
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
@@ -56,8 +55,6 @@ export class barchart implements OnInit {
     this.getDataFromBackend();
 
   }
-
-
 
   public barChartData: any[] = [
     { data: [], label: 'number of user' }
@@ -74,7 +71,7 @@ export class barchart implements OnInit {
   }
 
   public randomize(): void {
-    // Only Change 3 values
+
     let data = [
       Math.round(Math.random() * 100),
       59,
@@ -86,11 +83,6 @@ export class barchart implements OnInit {
     let clone = JSON.parse(JSON.stringify(this.barChartData));
     clone[0].data = data;
     this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
+  
   }
 }

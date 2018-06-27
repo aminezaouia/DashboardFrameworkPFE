@@ -14,12 +14,12 @@ import { CalculatorComponent } from './calculator/calculator.component';
 //Add the new component and all the components used in it in  EntryComponent 
 export const EntryComponent: Array<any> = [NoteComponent, PieComponent, BirdEyeComponent,
     LinechartComponent, LiveFeedsComponent, RevenueComponent, SocialNetworkComponent,
-    LiveStatsComponent, barchart, CalcComponent,CalculatorComponent];
+    LiveStatsComponent, barchart, CalcComponent, CalculatorComponent];
 export const DeclarationComponent = EntryComponent;
 
 //Add the icon and the name of the widget in Library
 export const Library: Array<any> = [
-    { 'component': CalculatorComponent, 'name': 'calculator ', 'icon': 'fa fa-calculator' },
+    { 'component': CalculatorComponent, 'name': 'calculator new ', 'icon': 'fa fa-calculator' },
     { 'component': NoteComponent, 'name': 'Note', 'icon': 'fa fa-edit' },
     { 'component': PieComponent, 'name': 'Pie chart', 'icon': 'fa fa-pie-chart' },
     { 'component': BirdEyeComponent, 'name': 'Bird eye', 'icon': 'glyphicon glyphicon-map-marker' },

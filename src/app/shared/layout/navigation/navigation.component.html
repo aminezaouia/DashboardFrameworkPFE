@@ -4,6 +4,7 @@
   <nav>
     <sa-login-info></sa-login-info>
     <ul saSmartMenu>
+      
       <li routerLinkActive="active">
         <a routerLink="/home" title="Home">
           <i class="fa fa-lg fa-fw fa-home"></i>
@@ -43,8 +44,8 @@
             </a>
           </li>
           <li>
-            <a class="" (click)="showDeleteSharedPagePopup()">{{'' | i18n}}
-              <i class="fa fa-trash-o" style="font-size:25px;color:white;padding-left:1% "></i>
+            <a  style="color:white " class="" (click)="showDeleteSharedPagePopup()">{{'Delete All' | i18n}}
+              <i class="fa fa-trash-o" style="font-size:25px;color:white;padding-left:1% "> </i>
             </a>
           </li>
         </ul>
@@ -65,12 +66,17 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" #newname id="newname" required>
+          <input type="text" #newname id="newname" required class="form-control"
+           minlength="4"    name="newname"
+           >
+        
         </div>
       </div>
       <div class="modal-footer">
+  
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="AddNewPage(newname.value)">Add dashboard</button>
+        <button type="button" class="btn btn-default"   data-dismiss="modal" 
+        (click)="AddNewPage(newname.value)">Add dashboard</button>
       </div>
     </div>
   </div>

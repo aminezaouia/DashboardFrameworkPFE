@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forEach } from '@angular/router/src/utils/collection';
@@ -7,6 +7,7 @@ import { GridsterConfig, GridsterItem } from 'angular-gridster2';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { GridsterItemIndex } from "../dashletbase/gridsteritem";
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch'; 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -24,10 +25,10 @@ import { AuthService } from 'angularx-social-login';
 export class DataService {
 	private actionUrl: string;
 	queryUrl: string = '?search=';
-	UserURL: string =	'http://localhost:53760/api/users/'
-	AccountsURL: string =	'http://localhost:53760/api/Accounts/'
-	dataURL: string ='http://localhost:53760/api/data/'
-	SharedDashboardsURL: string ='http://localhost:53760/api/SharedDashboards/'
+	UserURL: string = 'http://localhost:53760/api/users/'
+	AccountsURL: string = 'http://localhost:53760/api/Accounts/'
+	dataURL: string = 'http://localhost:53760/api/data/'
+	SharedDashboardsURL: string = 'http://localhost:53760/api/SharedDashboards/'
 
 	constructor(private http: Http, private httpclient: HttpClient,
 		private dashboardGridsterConfigService: DashboardGridsterConfigService, private authService: AuthService) { }
@@ -62,26 +63,21 @@ export class DataService {
 				"email": user.email,
 				"password": user.password,
 				"data": data,
-				"shared":user.shared
+				"shared": user.shared
 			};
 			this.update(obj, id).subscribe();
 			console.log('obj to send', obj);
 		});
 	}
-
-	// AddPage(obj, UserID) {
-	// 	let headers = new Headers({ 'Content-Type': 'application/json' });
-	// 	let options = new RequestOptions({ headers: headers });
-	// 	this.http.put('http://localhost:53760/api/users/' + UserID, obj, options).map(res => res.json());
-	// }
-	// private handleError<T>(operation = 'operation', result?: T) {
-	// 	return (error: any): Observable<T> => {
-	// 		return null
-	// 	}
-	// }
+	public handleError(error: HttpErrorResponse) {
+		
+		  // A client-side or network error occurred. Handle it accordingly.
+		  console.error('An error occurred:', error.error.message);
+		}
 	GetUserByEmail(email) {
 
 		return this.http.get(this.AccountsURL + email)
+		  
 	}
 	GetUser(id) {
 		return this.http.get(this.UserURL + id)
@@ -102,36 +98,50 @@ export class DataService {
 			.map(res => res.json());
 
 	}
-	GetMySharedPages(id){
-		
-		return this.http.get(this.SharedDashboardsURL + id)
-	
-	}
+	GetMySharedPages(id) {
 
-	SharePageByUserID(email,sharedObj){
+		return this.http.get(this.SharedDashboardsURL + id)
+
+	}
+	DeleteSharedPages(id) {
+		return this.http.delete(this.SharedDashboardsURL + id)
+	}
+	
+	SharePageByUserID (email, sharedObj) :any{
 		var obj: any;
-		var idtemp:number
-	this.GetUserByEmail(email).subscribe((UserID)=>{
-		idtemp=+UserID.text();
-		this.GetUser(idtemp).subscribe((user: any) => {
-			console.log('shared obj:', sharedObj,user);
-			let jsonOBJ=JSON.parse(user.shared)
+		var idtemp: number;
+	
+		this.GetUserByEmail(email).subscribe(
 			
-			jsonOBJ.push(sharedObj);
-			console.log('json obj',jsonOBJ)
-			obj = {
-				"id": user.id,
-				"name": user.name,
-				"email": user.email,
-				"password": user.password,
-				"data": user.data,
-				"shared":	JSON.stringify(jsonOBJ)
-			};
-			this.update(obj, idtemp).subscribe();
-			console.log('obj to send', obj);
-		});
-	})	
+			(UserID) => {
+			
+			idtemp = +UserID.text();
+			
+			this.GetUser(idtemp).subscribe((user: any) => {
+				console.log('shared obj:', sharedObj, user);
+				let jsonOBJ = JSON.parse(user.shared);
+				jsonOBJ.push(sharedObj);
+				console.log('json obj', jsonOBJ);
+				obj = {
+					"id": user.id,
+					"name": user.name,
+					"email": user.email,
+					"password": user.password,
+					"data": user.data,
+					"shared": JSON.stringify(jsonOBJ)
+				};
+				this.update(obj, idtemp).subscribe();
+				console.log('obj to send', obj);
+				
+			}
 		
+		);
+		}
+
+
+	
+	)
+
 
 	}
 }

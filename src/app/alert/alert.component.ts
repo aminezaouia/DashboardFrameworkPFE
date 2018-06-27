@@ -24,7 +24,7 @@ export class AlertComponent {
 
             // add alert to array
             this.alerts.push(alert);
-            setTimeout(() => { this.removeAlert(alert); }, 1000);
+            setTimeout(() => { this.removeAlert(alert); }, 2000);
         });
     }
 

@@ -18,6 +18,7 @@ import { AuthService } from 'angularx-social-login';
 declare var $: any;
 import { ComponentCanDeactivate } from './guard';
 import { Observable } from 'rxjs/Observable';
+import { setTimeout } from 'timers';
 //import {} from "../../login/login.component";
 @Component({
   selector: 'app-testdash',
@@ -298,8 +299,16 @@ export class TestdashComponent implements OnChanges, OnInit, ComponentCanDeactiv
     Sub.unsubscribe();
     this.router.navigate(['']);
   }
-
+  SaveFterDelete() {
+    var currentParam: number;
+    var Sub: Subscription = this.route.params.subscribe(param => {
+      currentParam = +this.route.snapshot.paramMap.get('id');
+      this.SaveDashboardState(this.ActiveUserID, currentParam, this.items)
+    });
+    Sub.unsubscribe();
+  }
   Save() {
+
     var currentParam: number;
     var Sub: Subscription = this.route.params.subscribe(param => {
       currentParam = +this.route.snapshot.paramMap.get('id');
@@ -333,8 +342,16 @@ export class TestdashComponent implements OnChanges, OnInit, ComponentCanDeactiv
     this.authService.authState.subscribe((user) => {
       this.MyEmail = user.email;
       if (email != this.MyEmail) {
-        this.ShareCurrentPage(email, user.name)
-      }
+        this._dataService.GetUserByEmail(email).subscribe((data) => {
+
+
+          this.ShareCurrentPage(email, user.name)
+        },
+          (error) => { this.error('Enter a valide email') }
+
+        )
+
+      } else this.error('You can not share this with your self')
 
     })
   }
@@ -369,8 +386,12 @@ export class TestdashComponent implements OnChanges, OnInit, ComponentCanDeactiv
         "username": username,
         "date": date
       }
+
       this._dataService.SharePageByUserID(email, obj)
-      this.success('Dashboard Sahred successfully with ' + username);
+
+
+
+      this.success('Dashboard Shared successfully with  ' + username);
     });
     Sub.unsubscribe();
 
