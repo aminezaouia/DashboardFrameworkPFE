@@ -19,7 +19,6 @@ declare var $: any;
 import { ComponentCanDeactivate } from './guard';
 import { Observable } from 'rxjs/Observable';
 import { setTimeout } from 'timers';
-//import {} from "../../login/login.component";
 @Component({
   selector: 'app-testdash',
   templateUrl: './testdash.component.html',
@@ -60,8 +59,7 @@ export class TestdashComponent implements OnChanges, OnInit, ComponentCanDeactiv
     private alertService: AlertService,
     public _dataService: DataService, private authService: AuthService,
     private spinnerService: Ng4LoadingSpinnerService,
-    private notificationService: NotificationService) {
-  }
+    private notificationService: NotificationService) { }
 
   @ViewChild('lgModal') public lgModal: ModalDirective;
   public showChildModal(): void {
