@@ -13,7 +13,7 @@ export class barchart implements OnInit {
 
 
   data: Array<string> = []
-  ApiEndPoint: string = " http://localhost:3000/BarChartApi";
+  ApiEndPoint: string = "http://localhost:3000/BarChartApi";
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
